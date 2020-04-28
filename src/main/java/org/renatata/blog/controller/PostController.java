@@ -40,7 +40,7 @@ public class PostController {
 
     @GetMapping(path = "/{id}/comments")
     public ResponseEntity<List<Comment>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if (!commentRepository.findAllCommentsByPostId(id).isEmpty())
+        if (commentRepository.findAllCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(commentRepository.findAllCommentsByPostId(id), HttpStatus.OK);
