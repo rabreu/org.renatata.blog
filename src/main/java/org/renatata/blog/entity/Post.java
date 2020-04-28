@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter @Setter
 public class Post {
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

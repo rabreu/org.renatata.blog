@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter @Setter
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
