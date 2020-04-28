@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "POSTS")
+@Table(name = "Posts")
 @Getter @Setter
 public class Post {
     @Id
@@ -28,5 +28,5 @@ public class Post {
 
     @ManyToOne
     @NotNull
-    private Author author;
+    private User user;
 }
