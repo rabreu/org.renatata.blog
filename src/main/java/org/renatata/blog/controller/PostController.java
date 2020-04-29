@@ -3,6 +3,7 @@ package org.renatata.blog.controller;
 import org.renatata.blog.entity.Comment;
 import org.renatata.blog.entity.Post;
 import org.renatata.blog.repository.CommentRepository;
+import org.renatata.blog.service.CommentService;
 import org.renatata.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,27 @@ public class PostController {
     private PostService postService;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentService commentService;
 
     @GetMapping()
+    public ResponseEntity<List<Post>> findAllActive() {
+        return new ResponseEntity(postService.findAllActive(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Optional<Post>> findActiveById(@PathVariable(value = "id") Long id) {
+        if (!postService.findActiveById(id).isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(postService.findActiveById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/all")
     public ResponseEntity<List<Post>> findAll() {
         return new ResponseEntity(postService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/all/{id}")
     public ResponseEntity<Optional<Post>> findById(@PathVariable(value = "id") Long id) {
         if (!postService.findById(id).isPresent())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -39,10 +53,18 @@ public class PostController {
     }
 
     @GetMapping(path = "/{id}/comments")
-    public ResponseEntity<List<Comment>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if (commentRepository.findAllCommentsByPostId(id).isEmpty())
+    public ResponseEntity<List<Comment>> findActiveCommentsByPostId(@PathVariable(value = "id") Long id) {
+        if (commentService.findActiveCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(commentRepository.findAllCommentsByPostId(id), HttpStatus.OK);
+        return new ResponseEntity<>(commentService.findActiveCommentsByPostId(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/all/{id}/comments")
+    public ResponseEntity<List<Comment>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
+        if (commentService.findAllCommentsByPostId(id).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(commentService.findAllCommentsByPostId(id), HttpStatus.OK);
     }
 }

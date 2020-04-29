@@ -15,4 +15,8 @@ public class CommentService {
     public List<Comment> findAllCommentsByPostId(Long postId) {
         return commentRepository.findAllCommentsByPostId(postId);
     }
+
+    public List<Comment> findActiveCommentsByPostId(Long postId) {
+        return commentRepository.findActiveCommentsByPostId(postId);
+    }
 }

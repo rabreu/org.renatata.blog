@@ -23,6 +23,9 @@ public class Post {
     private String body;
 
     @Column
+    private Status status;
+
+    @Column
     @CreatedDate
     private Date postedAt;
 

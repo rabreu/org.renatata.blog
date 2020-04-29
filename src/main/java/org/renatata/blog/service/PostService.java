@@ -21,4 +21,12 @@ public class PostService {
     public Optional<Post> findById(Long id) {
         return postRepository.findById(id);
     }
+
+    public List<Post> findAllActive() {
+        return postRepository.findAllActive();
+    }
+
+    public Optional<Post> findActiveById(Long id) {
+        return postRepository.findActiveById(id);
+    }
 }

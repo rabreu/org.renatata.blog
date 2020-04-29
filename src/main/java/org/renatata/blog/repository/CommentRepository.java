@@ -14,4 +14,12 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
             "WHERE POST_ID = :postId",
             nativeQuery = true)
     List<Comment> findAllCommentsByPostId(@Param("postId") Long postId);
+
+    @Query(value = "SELECT co.* FROM COMMENTS co " +
+            "JOIN POSTS po " +
+            "ON co.POST_ID = po.ID " +
+            "AND po.STATUS = 0 " +
+            "AND po.ID = :postId",
+            nativeQuery = true)
+    List<Comment> findActiveCommentsByPostId(@Param("postId") Long postId);
 }

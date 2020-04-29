@@ -5,7 +5,9 @@ INSERT INTO ROLES(ID, ROLE) VALUES (1, 'ADMIN');
 
 INSERT INTO USER_ROLE(USER_ID, ROLE_ID) VALUES (1, 1);
 
-INSERT INTO POSTS (ID, TITLE, BODY, POSTED_AT, USER_ID) VALUES (1, 'First post', 'Hi, this is my first post.', NOW(), 1);
+INSERT INTO POSTS (ID, TITLE, BODY, STATUS, POSTED_AT, USER_ID) VALUES (1, 'First post', 'Hi, this is my first post.', 0, NOW(), 1);
+INSERT INTO POSTS (ID, TITLE, BODY, STATUS, POSTED_AT, USER_ID) VALUES (2, 'Draft post', 'Hi, this is a draft.', 1, NOW(), 1);
 
 INSERT INTO COMMENTS (ID, BODY, CREATED_AT, POST_ID) VALUES (1, 'Nice post', now(), 1);
 INSERT INTO COMMENTS (ID, BODY, CREATED_AT, POST_ID) VALUES (2, 'So sexy!!', now(), 1);
+INSERT INTO COMMENTS (ID, BODY, CREATED_AT, POST_ID) VALUES (3, 'An useless comment on a draft post.', now(), 2);
