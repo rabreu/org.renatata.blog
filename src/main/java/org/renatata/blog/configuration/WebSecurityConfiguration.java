@@ -18,7 +18,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /*@EnableGlobalMethodSecurity(securedEnabled = true)*/
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    public static final String[] ALLOWED_URLS = {"/authenticate", "/post/**", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**"};
+    public static final String[] ALLOWED_URLS = {
+            "/authenticate",
+            "/post/",
+            "/comments/",
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/**",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
+    public static final String[] ADMIN_URLS = {
+            "/post/all/**",
+            "/comments/all/**"
+    };
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -68,13 +83,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers(ALLOWED_URLS)
                 .permitAll()
                 // Qualquer outra requisição deve ser checada
-                .antMatchers("/user/**").hasAuthority("ADMIN")
+                .antMatchers(ADMIN_URLS).hasAuthority("ADMIN")
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
