@@ -1,5 +1,6 @@
 package org.renatata.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,7 @@ public class Post {
 
     @Column
     @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date postedAt;
 
     @ManyToOne
