@@ -38,9 +38,7 @@ public class AuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String authenticatedUserName = userService.findUserByEmail(userDetails.getUsername()).get().getFirstName() +
-                " " +
-                userService.findUserByEmail(userDetails.getUsername()).get().getLastName();
+        String authenticatedUserName = userService.findUserByEmail(userDetails.getUsername()).get().getRealName();
         return ResponseEntity.ok(new JwtResponse(token, authenticatedUserName));
     }
 

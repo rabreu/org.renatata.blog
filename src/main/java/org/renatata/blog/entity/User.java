@@ -16,10 +16,7 @@ public class User {
     private Integer id;
 
     @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
+    private String realName;
 
     @Column(unique = true)
     @NotNull

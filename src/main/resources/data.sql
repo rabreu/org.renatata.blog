@@ -1,5 +1,5 @@
 
-INSERT INTO USERS (ID, ACTIVE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD) VALUES (1, true, 'Renata', 'Abreu', 'renata89abreu@gmail.com', '$2a$10$BXrgTIQ.BY9DinOCYQLt9uT4kuNlAu2HXs0G2.Qnf5IeqjzgV0ECG');
+INSERT INTO USERS (ID, ACTIVE, REAL_NAME, EMAIL, PASSWORD) VALUES (1, true, 'Renata Abreu', 'renata89abreu@gmail.com', '$2a$10$BXrgTIQ.BY9DinOCYQLt9uT4kuNlAu2HXs0G2.Qnf5IeqjzgV0ECG');
 
 INSERT INTO ROLES(ID, ROLE) VALUES (1, 'ADMIN');
 
