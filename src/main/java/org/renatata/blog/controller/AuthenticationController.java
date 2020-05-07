@@ -1,9 +1,11 @@
 package org.renatata.blog.controller;
 
 import org.renatata.blog.configuration.JwtTokenUtil;
+import org.renatata.blog.entity.User;
 import org.renatata.blog.model.JwtRequest;
 import org.renatata.blog.model.JwtResponse;
 import org.renatata.blog.service.JwtUserDetailsService;
+import org.renatata.blog.service.SecurityService;
 import org.renatata.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,9 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SecurityService securityService;
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
@@ -50,5 +55,10 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
+    }
+
+    @GetMapping(path = "/whoami")
+    public User authenticatedUser() {
+        return securityService.getUserAuthenticated();
     }
 }
