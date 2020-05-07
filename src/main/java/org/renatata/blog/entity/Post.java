@@ -24,11 +24,14 @@ public class Post {
     private String body;
 
     @Column
+    @Enumerated(EnumType.ORDINAL)
+    @NotNull
     private Status status;
 
     @Column
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @NotNull
     private Date postedAt;
 
     @ManyToOne
