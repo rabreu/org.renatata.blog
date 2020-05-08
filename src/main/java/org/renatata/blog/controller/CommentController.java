@@ -1,15 +1,14 @@
 package org.renatata.blog.controller;
 
+import org.json.JSONException;
 import org.renatata.blog.entity.Comment;
 import org.renatata.blog.model.CommentResponse;
 import org.renatata.blog.service.CommentService;
+import org.renatata.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +19,16 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private PostService postService;
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<List<CommentResponse>> findActiveCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if(commentService.findActiveCommentsByPostId(id).isEmpty())
+        if (commentService.findActiveCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         List<CommentResponse> commentResponses = new ArrayList<>();
-        for(Comment comment : commentService.findActiveCommentsByPostId(id))
+        for (Comment comment : commentService.findActiveCommentsByPostId(id))
             commentResponses.add(new CommentResponse(
                     comment.getBody(),
                     comment.getPost().getTitle(),
@@ -37,10 +39,42 @@ public class CommentController {
     }
 
     @GetMapping(path = "/all/{id}")
-    public ResponseEntity<List<Comment>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if(commentService.findAllCommentsByPostId(id).isEmpty())
+    public ResponseEntity<List<CommentResponse>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
+        if (commentService.findAllCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(commentService.findAllCommentsByPostId(id), HttpStatus.OK);
+        List<CommentResponse> commentResponses = new ArrayList<CommentResponse>();
+
+        for (Comment comment : commentService.findAllCommentsByPostId(id)) {
+            CommentResponse commentResponse = new CommentResponse(comment.getBody(),
+                    comment.getPost().getTitle(),
+                    comment.getPostedAt()
+            );
+            commentResponses.add(commentResponse);
+        }
+
+        return new ResponseEntity<>(commentResponses, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<CommentResponse> add(@RequestBody Comment comment, @RequestHeader(value = "post") Long postId) throws JSONException {
+        try {
+            if (!postService.findById(postId).isPresent())
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            comment.setPost(postService.findById(postId).get());
+            Comment savedComment = commentService.add(comment);
+
+            return new ResponseEntity<>(
+                    new CommentResponse(
+                            savedComment.getBody(),
+                            savedComment.getPost().getTitle(),
+                            savedComment.getPostedAt()
+                    ),
+                    HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
