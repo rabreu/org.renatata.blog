@@ -3,6 +3,7 @@ package org.renatata.blog.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -30,8 +31,8 @@ public class Post {
 
     @Column
     @CreatedDate
+    @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @NotNull
     private Date postedAt;
 
     @ManyToOne

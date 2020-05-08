@@ -1,6 +1,5 @@
 package org.renatata.blog.service;
 
-import org.renatata.blog.entity.Comment;
 import org.renatata.blog.entity.Post;
 import org.renatata.blog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +27,16 @@ public class PostService {
 
     public Optional<Post> findActiveById(Long id) {
         return postRepository.findActiveById(id);
+    }
+
+    public Post add(Post post) {
+        return postRepository.save(post);
+    }
+
+    public Post update(Post post, Long id) {
+        if (!this.findById(id).isPresent())
+            return null;
+
+        return postRepository.save(post);
     }
 }
