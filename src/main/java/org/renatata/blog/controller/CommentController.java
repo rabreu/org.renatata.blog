@@ -24,11 +24,11 @@ public class CommentController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<List<CommentResponse>> findActiveCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if (commentService.findActiveCommentsByPostId(id).isEmpty())
+        if(commentService.findActiveCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         List<CommentResponse> commentResponses = new ArrayList<>();
-        for (Comment comment : commentService.findActiveCommentsByPostId(id))
+        for(Comment comment : commentService.findActiveCommentsByPostId(id))
             commentResponses.add(new CommentResponse(
                     comment.getBody(),
                     comment.getPost().getTitle(),
@@ -40,12 +40,12 @@ public class CommentController {
 
     @GetMapping(path = "/all/{id}")
     public ResponseEntity<List<CommentResponse>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if (commentService.findAllCommentsByPostId(id).isEmpty())
+        if(commentService.findAllCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         List<CommentResponse> commentResponses = new ArrayList<CommentResponse>();
 
-        for (Comment comment : commentService.findAllCommentsByPostId(id)) {
+        for(Comment comment : commentService.findAllCommentsByPostId(id)) {
             CommentResponse commentResponse = new CommentResponse(comment.getBody(),
                     comment.getPost().getTitle(),
                     comment.getPostedAt()
@@ -60,7 +60,7 @@ public class CommentController {
     @ResponseBody
     public ResponseEntity<CommentResponse> add(@RequestBody Comment comment, @RequestHeader(value = "post") Long postId) throws JSONException {
         try {
-            if (!postService.findById(postId).isPresent())
+            if(!postService.findById(postId).isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             comment.setPost(postService.findById(postId).get());

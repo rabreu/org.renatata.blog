@@ -20,8 +20,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public static final String[] ALLOWED_URLS = {
             "/authenticate",
-            "/post/",
-            "/comments/",
+            "/post/**",
+            "/comments/**",
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
@@ -31,8 +31,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     public static final String[] ADMIN_URLS = {
-            "/post/all/**",
-            "/comments/all/**"
+            "/admin/**"
     };
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
