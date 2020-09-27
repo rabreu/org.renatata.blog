@@ -7,6 +7,85 @@
 	},
 	"item": [
 		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "posts (ALL)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/posts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post by id (ALL)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/posts/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"posts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comments by postId (ALL)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW5hdGE4OWFicmV1QGdtYWlsLmNvbSIsImV4cCI6MTYwMTI1OTkxNSwiaWF0IjoxNjAxMjQxOTE1fQ.vPv3yI2vgFBbJkLR3RYo-jUUmZEP-X4b9Kil5RNfJ89zYMQSNaxIRo0Y9Q4DrIEFUJweaFzRATk74bKG8dnzMA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "registration",
 			"request": {
 				"auth": {
@@ -93,14 +172,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/post/",
+					"raw": "http://localhost:8080/posts/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"post",
+						"posts",
 						""
 					]
 				}
@@ -113,14 +192,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/post/1",
+					"raw": "http://localhost:8080/posts/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"post",
+						"posts",
 						"1"
 					]
 				}
@@ -148,69 +227,6 @@
 			"response": []
 		},
 		{
-			"name": "posts (ALL)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/post/all",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"post",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "post by id (ALL)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/post/all/2",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"post",
-						"all",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "comments by postId (ALL)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/post/all/2/comments",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"post",
-						"all",
-						"2",
-						"comments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "add post",
 			"request": {
 				"auth": {
@@ -218,7 +234,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW5hdGE4OWFicmV1QGdtYWlsLmNvbSIsImV4cCI6MTU4ODg5MDkyNywiaWF0IjoxNTg4ODcyOTI3fQ.M1NGCTD5du6843eLsxa24ro-FyBRGXJOMOFagUz3QlnM38qN9n9QiMz3jFqJzTbAg1HI5sY84tFZPSnw2s_VNQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW5hdGE4OWFicmV1QGdtYWlsLmNvbSIsImV4cCI6MTYwMTI1OTkxNSwiaWF0IjoxNjAxMjQxOTE1fQ.vPv3yI2vgFBbJkLR3RYo-jUUmZEP-X4b9Kil5RNfJ89zYMQSNaxIRo0Y9Q4DrIEFUJweaFzRATk74bKG8dnzMA",
 							"type": "string"
 						}
 					]
@@ -227,7 +243,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"title\",\n\t\"body\": \"body\",\n\t\"status\": 0\n}",
+					"raw": "{\n\t\"title\": \"This is another post.\",\n\t\"body\": \"bla bla bla\",\n\t\"status\": 0\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -235,14 +251,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/post/add",
+					"raw": "http://localhost:8080/posts/add",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"post",
+						"posts",
 						"add"
 					]
 				}
@@ -264,14 +280,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/post/edit/1",
+					"raw": "http://localhost:8080/posts/edit/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"post",
+						"posts",
 						"edit",
 						"1"
 					]
