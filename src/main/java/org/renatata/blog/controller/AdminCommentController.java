@@ -24,7 +24,7 @@ public class AdminCommentController {
     @Autowired
     private PostService postService;
 
-    @GetMapping(path = "/all/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<List<CommentResponse>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
         if(commentService.findAllCommentsByPostId(id).isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
