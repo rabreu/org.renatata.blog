@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired
@@ -58,40 +58,6 @@ public class PostController {
                 HttpStatus.OK);
     }
 
-    @GetMapping(path = "/all")
-    public ResponseEntity<List<PostResponse>> findAll() {
-        if (postService.findAll().isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        List<PostResponse> postResponse = new ArrayList<PostResponse>();
-        for (Post post : postService.findAll())
-            postResponse.add(new PostResponse(
-                    post.getTitle(),
-                    post.getBody(),
-                    post.getUser().getRealName(),
-                    post.getPostedAt(),
-                    post.getStatus()
-            ));
-
-        return new ResponseEntity(postResponse, HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/all/{id}")
-    public ResponseEntity<PostResponse> findById(@PathVariable(value = "id") Long id) {
-        if (!postService.findById(id).isPresent())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-
-        return new ResponseEntity<PostResponse>(new PostResponse(
-                postService.findById(id).get().getTitle(),
-                postService.findById(id).get().getBody(),
-                postService.findById(id).get().getUser().getRealName(),
-                postService.findById(id).get().getPostedAt(),
-                postService.findById(id).get().getStatus()
-        ),
-                HttpStatus.OK);
-    }
-
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<PostResponse> add(@RequestBody Post post) throws JSONException {
@@ -119,19 +85,19 @@ public class PostController {
         try {
             Optional<Post> postExists = postService.findById(id);
 
-            if(!postExists.isPresent())
+            if (!postExists.isPresent())
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            if(securityService.getUserAuthenticated() != postExists.get().getUser())
+            if (securityService.getUserAuthenticated() != postExists.get().getUser())
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-            if(post.getTitle() != null)
+            if (post.getTitle() != null)
                 postExists.get().setTitle(post.getTitle());
 
-            if(post.getBody() != null)
+            if (post.getBody() != null)
                 postExists.get().setBody(post.getBody());
 
-            if(post.getStatus() != null)
+            if (post.getStatus() != null)
                 postExists.get().setStatus(post.getStatus());
 
             postService.update(postExists.get(), id);

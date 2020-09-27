@@ -38,24 +38,6 @@ public class CommentController {
         return new ResponseEntity<List<CommentResponse>>(commentResponses, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/all/{id}")
-    public ResponseEntity<List<CommentResponse>> findCommentsByPostId(@PathVariable(value = "id") Long id) {
-        if(commentService.findAllCommentsByPostId(id).isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        List<CommentResponse> commentResponses = new ArrayList<CommentResponse>();
-
-        for(Comment comment : commentService.findAllCommentsByPostId(id)) {
-            CommentResponse commentResponse = new CommentResponse(comment.getBody(),
-                    comment.getPost().getTitle(),
-                    comment.getPostedAt()
-            );
-            commentResponses.add(commentResponse);
-        }
-
-        return new ResponseEntity<>(commentResponses, HttpStatus.OK);
-    }
-
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<CommentResponse> add(@RequestBody Comment comment, @RequestHeader(value = "post") Long postId) throws JSONException {

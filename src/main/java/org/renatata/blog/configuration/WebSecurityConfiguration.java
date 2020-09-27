@@ -4,6 +4,7 @@ import org.renatata.blog.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,20 +19,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /*@EnableGlobalMethodSecurity(securedEnabled = true)*/
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    public static final String[] ALLOWED_URLS = {
+    public static final String[] ALLOWED_GET_URLS = {
             "/authenticate",
-            "/post/**",
+            "/posts/**",
             "/comments/**",
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/**",
-            "/swagger-ui.html",
-            "/webjars/**"
+    };
+
+    public static final String[] ALLOWED_POST_URLS = {
+            "/authenticate",
+            "/comments/**"
+    };
+
+    public static final String[] ALLOWED_PUT_URLS = {
+            "/comments/**"
     };
 
     public static final String[] ADMIN_URLS = {
-            "/admin/**"
+            "/admin/**",
+            "/user/**"
     };
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -79,7 +84,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 // Não cheque essas requisições
-                .authorizeRequests().antMatchers(ALLOWED_URLS)
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, ALLOWED_GET_URLS).anonymous()
+                .antMatchers(HttpMethod.POST, ALLOWED_POST_URLS).anonymous()
+                .antMatchers(HttpMethod.PUT, ALLOWED_PUT_URLS)
                 .permitAll()
                 // Qualquer outra requisição deve ser checada
                 .antMatchers(ADMIN_URLS).hasAuthority("ADMIN")
