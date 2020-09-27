@@ -10,6 +10,45 @@
 			"name": "admin",
 			"item": [
 				{
+					"name": "registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW5hdGE4OWFicmV1QGdtYWlsLmNvbSIsImV4cCI6MTU4ODExNTk0MiwiaWF0IjoxNTg4MDk3OTQyfQ.0fZsJbonpaCQA2udP-DrM6UAJXcT5Ach1zOj1BGJhZDlZXgSwxz8g82GGSMh1vLpePU4P5CVKfBJwXx6zcrWYA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\n\t\"firstName\":\"Renata\",\n\t\"lastName\": \"Test\",\n\t\"password\":\"1234\",\n\t\"email\":\"renata@test\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/admin/user/registration",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"user",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "posts (ALL)",
 					"request": {
 						"method": "GET",
@@ -84,44 +123,6 @@
 				}
 			],
 			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "registration",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZW5hdGE4OWFicmV1QGdtYWlsLmNvbSIsImV4cCI6MTU4ODExNTk0MiwiaWF0IjoxNTg4MDk3OTQyfQ.0fZsJbonpaCQA2udP-DrM6UAJXcT5Ach1zOj1BGJhZDlZXgSwxz8g82GGSMh1vLpePU4P5CVKfBJwXx6zcrWYA",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \n\t\n\t\"firstName\":\"Renata\",\n\t\"lastName\": \"Test\",\n\t\"password\":\"1234\",\n\t\"email\":\"renata@test\"\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/user/registration",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"user",
-						"registration"
-					]
-				}
-			},
-			"response": []
 		},
 		{
 			"name": "authenticate",
