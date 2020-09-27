@@ -35,8 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     public static final String[] ADMIN_URLS = {
-            "/admin/**",
-            "/user/**"
+            "/admin/**"
     };
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
