@@ -32,6 +32,7 @@ public class PostController {
         List<PostResponse> postResponse = new ArrayList<PostResponse>();
         for (Post post : postService.findAllActive())
             postResponse.add(new PostResponse(
+                    post.getId(),
                     post.getTitle(),
                     post.getBody(),
                     post.getUser().getRealName(),
@@ -49,6 +50,7 @@ public class PostController {
 
 
         return new ResponseEntity<PostResponse>(new PostResponse(
+                postService.findActiveById(id).get().getId(),
                 postService.findActiveById(id).get().getTitle(),
                 postService.findActiveById(id).get().getBody(),
                 postService.findActiveById(id).get().getUser().getRealName(),
@@ -67,6 +69,7 @@ public class PostController {
 
             return new ResponseEntity<>(
                     new PostResponse(
+                            savedPost.getId(),
                             savedPost.getTitle(),
                             savedPost.getBody(),
                             savedPost.getUser().getRealName(),
@@ -104,6 +107,7 @@ public class PostController {
 
             return new ResponseEntity<>(
                     new PostResponse(
+                            postExists.get().getId(),
                             postExists.get().getTitle(),
                             postExists.get().getBody(),
                             postExists.get().getUser().getRealName(),

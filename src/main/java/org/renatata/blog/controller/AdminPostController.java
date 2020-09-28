@@ -33,6 +33,7 @@ public class AdminPostController {
         List<PostResponse> postResponse = new ArrayList<PostResponse>();
         for (Post post : postService.findAll())
             postResponse.add(new PostResponse(
+                    post.getId(),
                     post.getTitle(),
                     post.getBody(),
                     post.getUser().getRealName(),
@@ -50,6 +51,7 @@ public class AdminPostController {
 
 
         return new ResponseEntity<PostResponse>(new PostResponse(
+                postService.findById(id).get().getId(),
                 postService.findById(id).get().getTitle(),
                 postService.findById(id).get().getBody(),
                 postService.findById(id).get().getUser().getRealName(),
