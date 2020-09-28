@@ -16,7 +16,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
 
     @Query(value = "SELECT * FROM POSTS " +
-            "WHERE STATUS = 0",
+            "WHERE STATUS = 0 " +
+            "ORDER BY POSTED_AT " +
+            "DESC",
             nativeQuery = true)
     List<Post> findAllActive();
 
