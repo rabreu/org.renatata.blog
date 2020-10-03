@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -22,6 +23,9 @@ public class Post {
     private String title;
 
     @Column
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @NotNull
     private String body;
 
     @Column
